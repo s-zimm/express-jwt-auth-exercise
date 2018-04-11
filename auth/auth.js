@@ -18,7 +18,7 @@ const postToken = async (req, res) => {
     if (password === user.password) {
         let token = await createToken(user);
         console.log(token)
-        res.send(token);
+        res.redirect('/home.html');
     } else {
         res.send('Invalid credentials!');
     }
