@@ -4,19 +4,20 @@ const findUserByUsername = require('../db/db').findUserByUsername;
 const signature = 'ELOHELasignature';
 
 const createToken = user => {
-    jwt.sign(
+    return jwt.sign(
         { id: user.id },
-        signature,
-        { expiresIn: '7d' }
+        signature
     );
 }
 
-const postToken =(req, res) => {
+const postToken = async (req, res) => {
     let {username, password} = req.body;
     let user = findUserByUsername(username);
+    console.log(user)
 
     if (password === user.password) {
-        let token = createToken(user);
+        let token = await createToken(user);
+        console.log(token)
         res.send(token);
     } else {
         res.send('Invalid credentials!');
