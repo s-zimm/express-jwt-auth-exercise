@@ -11,14 +11,14 @@ const createToken = user => {
 }
 
 const postToken = async (req, res) => {
-    let {username, password} = req.body;
-    let user = findUserByUsername(username);
-    console.log(user)
+    let {username, password} = await req.body;
+    let user = await findUserByUsername(username);
 
     if (password === user.password) {
         let token = await createToken(user);
-        console.log(token)
-        res.redirect('/home.html');
+        console.log(token, 'the token');
+        res.set('authentication', token)
+        res.send(token);
     } else {
         res.send('Invalid credentials!');
     }
